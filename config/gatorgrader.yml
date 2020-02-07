@@ -1,0 +1,58 @@
+---
+name: cs100-S2020-practical4
+break: true
+indent: 4
+---
+
+# Learn more about GatorGrader and its supported checks by visiting this web site:
+# https://github.com/GatorEducator/gatorgrader
+
+# Explanation:
+# --> a check without an "--exact" runs a count for an entity as an "at least"
+# --> checks below a file in a specified directory are for that specific file and directory
+# --> checks that appear stand-alone are for an entire Git repository
+
+# --> check the source code for various characteristics
+src/main:
+    java:
+        practicalfour/MadLibs.java:
+            ConfirmFileExists
+            CountSingleLineComments --language Java --count 4
+            CountMultipleLineComments --language Java --count 2
+            MatchFileFragment --fragment "TODO" --count 0 --exact
+            MatchFileFragment --fragment "Add Your Name Here" --count 0 --exact
+            MatchFileFragment --fragment "package practicalfour;" --count 1 --exact
+            MatchFileFragment --fragment "import java.util.Date;" --count 1 --exact
+            MatchFileFragment --fragment "import java.util.Scanner;" --count 1 --exact
+            MatchFileFragment --fragment "import java.io.File;" --count 1 --exact
+            MatchFileFragment --fragment "import java.io.FileNotFoundException;" --count 1 --exact
+            MatchFileFragment --fragment "new Date()" --count 1 --exact
+            MatchFileFragment --fragment "public class MadLibs" --count 1 --exact
+            MatchFileFragment --fragment "new File(" --count 1 --exact
+            MatchFileFragment --fragment "println(" --count 5
+            MatchFileFragment --fragment "nextLine(" --count 5
+            MatchFileFragment --fragment "print(" --count 1
+
+# --> check that the number of commits in the Git repository is beyond a threshold
+CountCommits --count 5
+
+# --> check that the program executes correctly and produces exactly 4 lines of output
+ExecuteCommand --command "gradle build"
+ExecuteCommand --command "gradle -q --console plain run"
+CountCommandOutput --command "gradle -q --console plain run" --count 15 --exact
+
+# --> check that the program produces the output sentences like the following:
+#
+# Portion of the output:
+#
+# I read a singular noun: noggin
+# I read an adjective: verboten
+# I read another adjective: glitzy
+# I read a non-zero whole number: 32
+# I read another non-zero whole number: 42
+# I read any number: 5.43
+# I read a singular verb: snooze
+#
+# Note: checks for the specific numerical values that are fully determined by correct code
+MatchCommandFragment --command "gradle -q --console plain run" --count 1 --fragment "glitzy"
+MatchCommandFragment --command "gradle -q --console plain run" --count 1 --fragment "5.43"
